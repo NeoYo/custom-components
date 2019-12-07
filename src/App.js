@@ -18,7 +18,7 @@ function App(){
 		})();
 	}, []);
 
-	// 测试 InputNumber 组件
+	// 测试 InputNumber 组件， InputNumber的API设计，部分参照了 Antdesign
 	const [value, setValue] = useState('222');
 	// value 私有属性
 	const valueRef = useRef('111');
