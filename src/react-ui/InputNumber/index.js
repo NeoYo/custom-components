@@ -15,6 +15,8 @@ class InputNumber extends Component {
         value: PropTypes.string,
         onChange: PropTypes.func,
         size: PropTypes.string,
+        max: PropTypes.number,
+        min: PropTypes.number,
     }
 
     static defaultProps = {
@@ -34,6 +36,19 @@ class InputNumber extends Component {
         }
     }
 
+    getValidNumber(value) {
+        const num = Number(value.replace(/(?!-)[^0-9.]/g, ''));
+        const { max, min } = this.props;
+        if (typeof(max) === 'number'
+            && num > max) {
+            return max;
+        }
+        if (typeof(min) === 'number'
+            && num < min) {
+            return min;
+        }
+        return num;
+    }
 
     render() {
         const {
@@ -62,6 +77,7 @@ class InputNumber extends Component {
                 <div className={cls}>
                     {prefix && <Icon name={prefix} />}
                     <input
+                        {...rest}
                         value={this.value}
 
                         onFocus={e => {
@@ -69,10 +85,22 @@ class InputNumber extends Component {
                                 focus: true
                             })
                         }}
+                        // 跟 InputNumber 一样 blur 时过滤非 Number
                         onBlur={e => {
-                            this.setState({
-                                focus: false
-                            })
+                            const value = this.getValidNumber(e.target.value);
+                            this.setState(
+                                {
+                                    focus: false,
+                                    innerValue: value,
+                                },
+                            );
+                            this.props.onChange({
+                                ...e,
+                                target: {
+                                    ...e.targe,
+                                    value,
+                                },
+                            });
                         }}
                         onChange={(e) => {
                             if (!this.isControl) {
