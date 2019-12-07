@@ -21,7 +21,7 @@ class Button extends Component{
 			...rest
 		} = this.props
 		return (
-			<button className={`react-ui__btn--${type}`}>
+			<button className={`react-ui__btn--${type}`} {...rest}>
 				<Icon name={icon}/>
 				{children}
 			</button>

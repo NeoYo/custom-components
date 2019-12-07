@@ -1,9 +1,24 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import './App.css';
 // import Icon from './react-ui/Icon';
 import InputNumber from './react-ui/InputNumber';
+import confirm from './react-ui/Confirm';
 
-function App(){
+function App(){	
+	// 测试 Confirm 组件
+	useEffect(() => {
+		console.log('componentDidMount');
+		(async () => {
+			let res = await confirm("确定删除吗")
+			if(res) {
+				console.log("是")
+			} else {
+				console.log("否")
+			}	
+		})();
+	});
+
+	// 测试 InputNumber 组件
 	const [value, setValue] = useState('222');
 	// value 私有属性
 	const valueRef = useRef('111');
@@ -29,7 +44,7 @@ function App(){
 				}}
 				/>
         </div>
-    )
+	)
 }
 
 export default App;
