@@ -16,7 +16,7 @@ function App(){
 				console.log("否")
 			}	
 		})();
-	});
+	}, []);
 
 	// 测试 InputNumber 组件
 	const [value, setValue] = useState('222');
